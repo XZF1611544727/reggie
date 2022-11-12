@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface EmployeeService {
     List<Employee> list();
+
+    Employee selectByUsername(String username);
 }

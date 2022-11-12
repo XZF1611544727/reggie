@@ -16,10 +16,15 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
-    private EmployeeMapper employeeMapper;
+    EmployeeMapper employeeMapper;
 
     @Override
     public List<Employee> list() {
         return employeeMapper.list();
+    }
+
+    @Override
+    public Employee selectByUsername(String username) {
+        return employeeMapper.selectByUsername(username);
     }
 }

@@ -2,6 +2,7 @@ package com.juct.reggie.mapper;
 
 import com.juct.reggie.domain.Employee;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ import java.util.List;
 @Mapper
 public interface EmployeeMapper {
     List<Employee> list();
+
+    Employee selectByUsername(String username);
 }
