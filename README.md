@@ -26,7 +26,7 @@
 
 关于本项目的技术选型, 我们将会从 用户层、网关层、应用层、数据层进行介绍，对服务端开发工程师来说，主要关注应用层及数据层技术。
 
-![image-20210726005437857](reggie-web-manage/src/main/resources/backend/images/img/image-20210726005437857.png
+<img src="reggie-web-manage/src/main/resources/backend/images/img/20210726005437857.png" alt="image-20210726122825225" style="zoom:80%;" /> image-
 
 ```
 1. 用户层
