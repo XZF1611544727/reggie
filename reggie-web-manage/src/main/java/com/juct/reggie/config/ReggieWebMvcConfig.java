@@ -1,6 +1,9 @@
 package com.juct.reggie.config;
 
+import com.juct.reggie.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,5 +18,18 @@ public class ReggieWebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //当访问请求是/backend/**时,去classpath:/backend/寻找对应资源
         registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
+    }
+
+    @Autowired
+    LoginInterceptor loginInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/employee/login")
+                .excludePathPatterns("/employee/logout")
+                .excludePathPatterns("/backend/**")
+                .excludePathPatterns("/error");
     }
 }
