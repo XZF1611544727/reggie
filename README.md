@@ -10,7 +10,7 @@
 
 ### 功能架构
 
-<img src="img\image-20210726122825225.png" alt="image-20210726122825225" style="zoom:80%;" /> 
+<img src="reggie-web-manage/src/main/resources/backend/images/img/image-20210726122825225.png" alt="image-20210726122825225" style="zoom:80%;" /> 
 
 **1). 移动端前台功能**
 
