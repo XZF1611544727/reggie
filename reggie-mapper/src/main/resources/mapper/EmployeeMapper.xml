@@ -6,16 +6,105 @@
 
     <sql id="baseColumn">id,name,username,password,phone,sex,id_number,status,create_time,update_time,create_user,update_user</sql>
 
+    <insert id="addEmployee">
+        insert into employee(
+        id,
+        name,
+        username,
+        password,
+        phone,
+        sex,
+        id_number,
+        create_user,
+        update_user
+        ) value
+        (
+        #{id},
+        #{name},
+        #{username},
+        #{password},
+        #{phone},
+        #{sex},
+        #{idNumber},
+        #{createUser},
+        #{updateUser}
+        )
+    </insert>
+
+    <update id="updateById">
+    update employee
+    <set>
+        <if test="name != null and name != '' ">
+            name = #{name},
+        </if>
+        <if test="username != null and username != '' ">
+            username = #{username},
+        </if>
+        <if test="idNumber != null and idNumber != '' ">
+            id_number = #{idNumber},
+        </if>
+        <if test="phone != null and phone != '' ">
+            phone = #{phone},
+        </if>
+        <if test="sex != null and sex != '' ">
+            sex = #{sex},
+        </if>
+        <if test="updateTime != null">
+            update_time=#{updateTime},
+        </if>
+        <if test="updateUser != null">
+            update_user=#{updateUser},
+        </if>
+        <if test="status != null">
+            status=#{status},
+        </if>
+    </set>
+    where id = #{id}
+    </update>
+
     <select id="list" resultType="employee">
         select
-        <include refid="baseColumn"></include>
+        <include refid="baseColumn"/>
         from employee
     </select>
 
     <select id="selectByUsername" resultType="employee">
         select
-        <include refid="baseColumn"></include>
+        <include refid="baseColumn"/>
         from employee
         where username = #{username};
     </select>
+
+    <select id="selectByIdNumber" resultType="employee">
+        select
+        <include refid="baseColumn"/>
+        from employee
+        where id_number = #{idNumber};
+    </select>
+
+    <select id="selectByPhone" resultType="employee">
+        select
+        <include refid="baseColumn"/>
+        from employee
+        where phone = #{phone};
+    </select>
+
+    <select id="selectAll" resultType="employee">
+        select
+        <include refid="baseColumn"/>
+        from employee
+        <where>
+            <if test="name != null and name != '' ">
+                name like concat('%',#{name,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectById" resultType="employee">
+        select
+        <include refid="baseColumn"/>
+        from employee
+        where id = #{id};
+    </select>
+
 </mapper>

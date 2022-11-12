@@ -3,3 +3,12 @@ server:
 spring:
   application:
     name: reggie-web-manage # 应用名称
+
+pagehelper:
+  # 指定分页插件针对哪种数据库进行分页，不同数据库分页SQL有差异
+  helper-dialect: mysql
+  # 合理化设置，默认false，
+  # Default value is false。 When this parameter is set to true,
+  # pageNum <= 0 will query the first page,
+  # PageNum> pages (over the total number),will query the last page.
+  reasonable: true

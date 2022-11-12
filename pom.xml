@@ -26,10 +26,10 @@
     <!--这里父工程需要锁定的版本是 spring-boot-starter-parent 没有或者不适合本项目的版本-->
     <properties>
         <mysql.version>5.1.47</mysql.version>
-        <druid.version>1.2.6</druid.version>
+        <druid.version>1.2.3</druid.version>
         <mybatis.version>2.2.0</mybatis.version>
-        <aliyun.oss.version>3.1.0</aliyun.oss.version>
-        <hutool.version>5.3.5</hutool.version>
+        <aliyun.oss.version>3.10.2</aliyun.oss.version>
+        <hutool.version>5.7.20</hutool.version>
     </properties>
 
     <!--依赖管理-->
