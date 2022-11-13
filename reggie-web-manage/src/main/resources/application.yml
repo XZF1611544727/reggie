@@ -12,3 +12,11 @@ pagehelper:
   # pageNum <= 0 will query the first page,
   # PageNum> pages (over the total number),will query the last page.
   reasonable: true
+
+logging:
+  file:
+    name:
+      reggie.log # 在项目目录创建日志文件
+    path: "E:\\IDEA\\Log"
+  level:
+    com.itheima.reggie: info #记录info级别及以上的日志

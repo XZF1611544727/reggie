@@ -151,6 +151,11 @@ public class EmployeeController {
         return R.success(employeeService.selectByPage(page, pageSize, name));
     }
 
+    /**
+     * 根据ID获取
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public R<Employee> selectById(@PathVariable String id) {
         return R.success(employeeService.selectById(id));

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juct.reggie.mapper.CategoryMapper">
+
+    <sql id="category">
+        id,type,name,sort,create_time,update_time,create_user,update_user
+    </sql>
+
+    <insert id="addCategory">
+        insert into category(
+            id,
+            type,
+            name,
+            sort,
+            create_user,
+            update_user
+        )
+        value (
+            #{id},
+            #{type},
+            #{name},
+            #{sort},
+            #{createUser},
+            #{updateUser}
+        )
+    </insert>
+    <update id="updateCategory">
+        update category
+        <set>
+            <if test="name != null and name != ''">
+                `name` = #{name},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCategory">
+        delete from category where id = #{id}
+    </delete>
+
+    <select id="selectAll" resultType="com.juct.reggie.domain.Category">
+        select<include refid="category"/> from category
+        order by sort asc
+    </select>
+
+</mapper>
