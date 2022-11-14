@@ -17,6 +17,7 @@ public class MyExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public R businessException(BusinessException e) {
         log.error("**** 业务异常：{}", e.getMessage());
+        log.info("e = {} ", e);
         return R.error(e.getMessage());
     }
 
@@ -24,6 +25,7 @@ public class MyExceptionHandler {
     public R exception(Exception e) {
         //日志记录
         log.error("**** 程序异常：{}", e.getMessage());
+        log.info("e = {} ", e);
         //短信提示
         System.out.println("发短信给运维/开发人员...");
         //返回友好提示

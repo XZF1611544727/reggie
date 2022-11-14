@@ -20,14 +20,14 @@ import java.util.Date;
 public class OssTemplate {
     // 默认配置
     // Endpoint
-    private String endpoint = "oss-cn-beijing.aliyuncs.com";
+    private String endpoint = "";
     // 阿里云账号AccessKey
-    private String accessKeyId = "LTAI5tDSd1z448qaV41PjJzV";
-    private String accessKeySecret = "6gPDwUmAmH3WVp9O9W2MsyKWbOHnEQ";
+    private String accessKeyId = "";
+    private String accessKeySecret = "";
     // Bucket名称
-    private String bucketName = "reggie-web";
+    private String bucketName = "";
     // Bucket 域名
-    private String buckentPoint = "https://reggie-web.oss-cn-beijing.aliyuncs.com/";
+    private String buckentPoint = "";
 
     //文件上传
     public String upload(String fileName, InputStream inputStream) {

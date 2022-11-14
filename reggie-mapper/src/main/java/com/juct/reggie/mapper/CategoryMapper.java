@@ -32,4 +32,7 @@ public interface CategoryMapper {
     //查询套餐表中分类的数量
     @Select("select count(*) from setmeal where category_id = #{id}")
     int countSetmealByCid(String id);
+
+    @Select("select * from category where type = #{type} order by sort ASC")
+    List<Category> selectByType(String type);
 }

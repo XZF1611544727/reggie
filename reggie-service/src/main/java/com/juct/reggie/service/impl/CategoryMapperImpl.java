@@ -71,4 +71,14 @@ public class CategoryMapperImpl implements CategoryService {
         }
         categoryMapper.deleteCategory(id);
     }
+
+    /**
+     * 查询菜品分类
+     * @param type
+     * @return
+     */
+    @Override
+    public List<Category> selectByType(String type) {
+        return categoryMapper.selectByType(type);
+    }
 }
