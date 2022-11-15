@@ -35,4 +35,12 @@ public interface CategoryMapper {
 
     @Select("select * from category where type = #{type} order by sort ASC")
     List<Category> selectByType(String type);
+
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
+    @Select("select * from category where id = #{id}")
+    Category selectById(Long id);
 }

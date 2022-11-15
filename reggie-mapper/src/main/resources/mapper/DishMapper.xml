@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juct.reggie.mapper.DishMapper">
+
+    <update id="updateDish">
+        update dish
+        <set>
+            <if test="name != null and name != ''">
+                `name` = #{name},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser}
+            </if>
+        </set>
+        where id  = #{id}
+    </update>
+
+    <select id="selectByPage" resultType="dish">
+        select * from dish
+        <where>
+            <if test="name != null and name!='' ">
+                name = #{name}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="addDish">
+        insert into dish(
+            id,
+            name,
+            category_id,
+            price,
+            code,
+            image,
+            description,
+            create_user,
+            update_user
+        ) value(
+            #{id},
+            #{name},
+            #{categoryId},
+            #{price},
+            #{code},
+            #{image},
+            #{description},
+            #{createUser},
+            #{updateUser}
+        )
+    </insert>
+</mapper>
