@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juct.reggie.mapper.SetmealDishMapper">
+
+    <insert id="addSetmeal">
+        insert into setmeal_dish(
+            id,
+            setmeal_id,
+            dish_id,
+            `name`,
+            price,
+            copies,
+            create_user,
+            update_user
+        ) values (
+            #{id},
+            #{setmealId},
+            #{dishId},
+            #{name},
+            #{price},
+            #{copies},
+            #{createUser},
+            #{updateUser}
+        )
+    </insert>
+</mapper>

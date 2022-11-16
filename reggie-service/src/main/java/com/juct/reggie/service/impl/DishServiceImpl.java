@@ -45,6 +45,11 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Override
+    public List<Dish> selectByCategoryId(String categoryId) {
+        return dishMapper.selectByCategoryId(categoryId);
+    }
+
     /**
      * 新增菜品
      * @param dishDto
@@ -109,7 +114,7 @@ public class DishServiceImpl implements DishService {
      * @return
      */
     @Override
-    public DishDto selectById(String id) {
+    public DishDto selectById(Long id) {
         Dish dish = dishMapper.selectById(id);
         List<DishFlavor> list = dishFlavorMapper.selectByDishId(id);
         DishDto dishDto = new DishDto();

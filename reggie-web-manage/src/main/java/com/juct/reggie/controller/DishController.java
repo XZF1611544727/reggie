@@ -8,6 +8,7 @@ import com.juct.reggie.domain.Dish;
 import com.juct.reggie.domain.DishFlavor;
 import com.juct.reggie.dto.DishDto;
 import com.juct.reggie.service.DishService;
+import jdk.internal.org.objectweb.asm.tree.LocalVariableAnnotationNode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,20 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
+
+    /**
+     * 根据分类ID获取菜品
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Dish>> selectByCategoryId(
+            String categoryId
+    ) {
+        List<Dish> list = dishService.selectByCategoryId(categoryId);
+        return R.success(list);
+    }
+
 
     /**
      * 获取分页请求
@@ -59,18 +74,14 @@ public class DishController {
     }
 
     /**
-     * 根据ID 获取菜品
+     * 根据菜品ID获取菜品
      * @param id
      * @return
      */
     @GetMapping("/{id}")
     public R<DishDto> selectById(
-            @PathVariable String id
+            @PathVariable Long id
     ) {
-        //验证数据完整性
-        if (StrUtil.isBlank(id)) {
-            return R.error("数据不全！");
-        }
         return R.success(dishService.selectById(id));
     }
 

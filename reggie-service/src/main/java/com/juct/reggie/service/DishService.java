@@ -4,11 +4,20 @@ import com.github.pagehelper.PageInfo;
 import com.juct.reggie.domain.Dish;
 import com.juct.reggie.dto.DishDto;
 
+import java.util.List;
+
 /**
  * @author 谢智峰
  * @create 2022-11-14 14:30
  */
 public interface DishService {
+
+    /**
+     * 根据分类ID查询
+     * @param categoryId
+     * @return
+     */
+    List<Dish> selectByCategoryId(String categoryId);
 
     /**
      * 新增菜品
@@ -30,7 +39,7 @@ public interface DishService {
      * @param id
      * @return
      */
-    DishDto selectById(String id);
+    DishDto selectById(Long id);
 
     /**
      * 根据ID修改

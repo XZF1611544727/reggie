@@ -16,12 +16,16 @@ import java.util.List;
  */
 @Mapper
 public interface DishMapper {
+
+    @Select("select * from dish where category_id = #{categoryId}")
+    List<Dish> selectByCategoryId(String categoryId);
+
     void addDish(DishDto dishDto);
 
     List<Dish> selectByPage(String name);
 
     @Select("select * from dish where id = #{id}")
-    Dish selectById(String id);
+    Dish selectById(Long id);
 
     void updateDish(DishDto dishDto);
 
