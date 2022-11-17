@@ -18,3 +18,4 @@ reggie-mapper/src/test/
 reggie-service/src/main/resources/
 reggie-service/src/test/
 reggie-web-manage/src/test
+*.gz

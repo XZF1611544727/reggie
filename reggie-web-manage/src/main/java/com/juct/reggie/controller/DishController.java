@@ -35,7 +35,7 @@ public class DishController {
      */
     @GetMapping("/list")
     public R<List<Dish>> selectByCategoryId(
-            String categoryId
+            @RequestParam String categoryId
     ) {
         List<Dish> list = dishService.selectByCategoryId(categoryId);
         return R.success(list);
