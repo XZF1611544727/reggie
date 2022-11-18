@@ -81,4 +81,10 @@ public class CategoryMapperImpl implements CategoryService {
     public List<Category> selectByType(String type) {
         return categoryMapper.selectByType(type);
     }
+
+    @Override
+    public List<Category> selectCategory() {
+        return categoryMapper.selectAll();
+    }
+
 }

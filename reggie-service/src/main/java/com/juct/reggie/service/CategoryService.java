@@ -41,4 +41,10 @@ public interface CategoryService {
      * @return
      */
     List<Category> selectByType(String type);
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<Category> selectCategory();
 }

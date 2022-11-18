@@ -19,5 +19,6 @@ public class WebAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebAppApplication.class);
         log.info("项目启动成功");
+        log.info("15337218453");
     }
 }

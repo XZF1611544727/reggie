@@ -13,14 +13,14 @@ import java.util.Map;
 
 @Slf4j
 @Component
-@ConfigurationProperties(prefix = "sms.syhj")
+@ConfigurationProperties(prefix = "sms")
 @Getter
 @Setter
 public class SmsTemplate {
 
     //可以配置项-改成自己的
-    private String appcode = "f97c5cbafb014065abb72d6c41131725";
-    private String templateId = "TPL_09209";
+    private String appcode = "";
+    private String templateId = "";
 
     public String sendSms(String phone,String code){
         //固定配置
