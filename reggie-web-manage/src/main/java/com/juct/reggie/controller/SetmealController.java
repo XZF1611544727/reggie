@@ -6,6 +6,7 @@ import com.juct.reggie.common.exception.BusinessException;
 import com.juct.reggie.domain.Setmeal;
 import com.juct.reggie.dto.SetmealDto;
 import com.juct.reggie.service.SetmealService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @author 谢智峰
  * @create 2022-11-15 20:34
  */
+@Slf4j
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
@@ -52,8 +54,62 @@ public class SetmealController {
         return R.success(pageInfo);
     }
 
+    /**
+     * 根据ID查询套餐
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public R<SetmealDto> selectById(
-            @PathVariR.error("数据不
-        SetmealDto setmealDto = setmealService.selemeal(setmealDto);
-        return R.success(null
+            @PathVariable Long id
+    ) {
+        if (id == null) {
+            return R.error("数据不完整");
+        }
+        SetmealDto setmealDto = setmealService.selectById(id);
+        return R.success(setmealDto);
+    }
+
+    /**
+     * 修改套餐
+     * @param setmealDto
+     * @return
+     */
+    @PutMapping
+    public R updateSetmeal(
+            @RequestBody SetmealDto setmealDto
+    ) {
+        setmealService.updateSetmeal(setmealDto);
+        return R.success(null);
+    }
+
+    /**
+     * 根据ID删除套餐
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    public R deleteSetmeals(Long[] ids) {
+        //先检查套餐是否停售
+        if (!setmealService.selectStatus(ids)) {
+            return R.error("套餐未停售");
+        }
+        setmealService.deleteSetmeals(ids);
+        return R.success(null);
+    }
+
+    /**
+     * 更新售卖状态
+     * @param status
+     * @param ids
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    public R updateStatus(
+            @PathVariable Integer status,
+            Long[] ids
+    ) {
+        setmealService.updateStatus(status, ids);
+        return R.success(null);
+    }
+}

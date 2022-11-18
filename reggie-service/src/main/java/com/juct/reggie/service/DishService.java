@@ -59,4 +59,11 @@ public interface DishService {
      * @param ids
      */
     void updateStatus(Integer status, Long[] ids);
+
+    /**
+     * 查询关联套餐
+     * @param ids
+     * @return
+     */
+    boolean selectBySetmealCount(Long[] ids);
 }

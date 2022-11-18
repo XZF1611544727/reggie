@@ -1,8 +1,10 @@
 package com.juct.reggie.mapper;
 
 import com.juct.reggie.domain.Setmeal;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -24,4 +26,13 @@ public interface SetmealMapper {
     Setmeal selectById(Long id);
 
     void updateSetmeal(Setmeal setmeal);
+
+    @Delete("delete from setmeal where id = #{id}")
+    void deleteById(Long id);
+
+    @Update("update setmeal set status = #{status} where id = #{id}")
+    void updateStatus(Integer status, Long id);
+
+    @Select("select status from setmeal where id = #{id}")
+    int selectStatus(Long id);
 }

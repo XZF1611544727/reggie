@@ -37,5 +37,24 @@ public interface SetmealService {
      */
     SetmealDto selectById(Long id);
 
+    /**
+     * 更新数据
+     * @param setmealDto
+     */
     void updateSetmeal(SetmealDto setmealDto);
+
+    /**
+     * 删除
+     * @param ids
+     */
+    void deleteSetmeals(Long[] ids);
+
+    /**
+     * 更新售卖状态
+     * @param status
+     * @param ids
+     */
+    void updateStatus(Integer status, Long[] ids);
+
+    boolean selectStatus(Long[] ids);
 }

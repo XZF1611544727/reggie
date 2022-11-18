@@ -105,7 +105,10 @@ public class DishController {
      */
     @DeleteMapping
     public R deletesDish( Long[] ids) {
-        log.info("ids = {} ", ids);
+        //判断该菜品是否存在关联套餐
+        if (dishService.selectBySetmealCount(ids)) {
+            return R.error("该菜品存在关联套餐");
+        }
         dishService.deleteDish(ids);
         return R.success(null);
     }

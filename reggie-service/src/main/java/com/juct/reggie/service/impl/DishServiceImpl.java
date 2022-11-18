@@ -15,6 +15,7 @@ import com.juct.reggie.dto.DishDto;
 import com.juct.reggie.mapper.CategoryMapper;
 import com.juct.reggie.mapper.DishFlavorMapper;
 import com.juct.reggie.mapper.DishMapper;
+import com.juct.reggie.mapper.SetmealDishMapper;
 import com.juct.reggie.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Select;
@@ -44,6 +45,9 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private SetmealDishMapper setmealDishMapper;
 
     @Override
     public List<Dish> selectByCategoryId(String categoryId) {
@@ -160,9 +164,19 @@ public class DishServiceImpl implements DishService {
      */
     @Override
     public void updateStatus(Integer status, Long[] ids) {
-        for (int i = 0; i < ids.length; i++) {
-            dishMapper.updateStatus(status,ids[i]);
+        for (Long id : ids) {
+            dishMapper.updateStatus(status,id);
         }
+    }
+
+    @Override
+    public boolean selectBySetmealCount(Long[] ids) {
+        for (Long id : ids) {
+            if (setmealDishMapper.selectByDishIdCount(id) >= 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

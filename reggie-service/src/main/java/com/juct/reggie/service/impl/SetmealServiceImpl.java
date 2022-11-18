@@ -4,7 +4,6 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.juct.reggie.common.exception.BusinessException;
 import com.juct.reggie.common.util.ThreadLocalUtil;
 import com.juct.reggie.converter.SetmealConverter;
 import com.juct.reggie.domain.Category;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,13 +45,19 @@ public class SetmealServiceImpl implements SetmealService {
     @Transactional
     @Override
     public void addSetmeal(SetmealDto setmealDto) {
-        Setmeal setmeal = SetmealConverter.INSTANCE.toPO(setmealDto);
+        //生成ID
         long setmealId = IdUtil.getSnowflakeNextId();
-        setmeal.setId(setmealId);
+        //获取对象
         Employee emp = (Employee) ThreadLocalUtil.get();
-        setmeal.setCreateUser(emp.getId());
-        setmeal.setUpdateUser(emp.getId());
+        //补全数据
+        setmealDto.setId(setmealId);
+        setmealDto.setCreateUser(emp.getId());
+        setmealDto.setUpdateUser(emp.getId());
+        //复制对象属性到Setmeal
+        Setmeal setmeal = SetmealConverter.INSTANCE.toPO(setmealDto);
+        //保存套餐
         setmealMapper.addSetmeal(setmeal);
+        //调用条件套餐菜品方法
         addSetmealDish(setmealDto);
     }
 
@@ -98,6 +102,11 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealMapper.byName(name);
     }
 
+    /**
+     * 根据ID 查询
+     * @param id
+     * @return
+     */
     @Override
     public SetmealDto selectById(Long id) {
         Setmeal setmeal = setmealMapper.selectById(id);
@@ -124,6 +133,41 @@ public class SetmealServiceImpl implements SetmealService {
         addSetmealDish(setmealDto);
     }
 
+    @Override
+    public void deleteSetmeals(Long[] ids) {
+        for (Long id : ids) {
+            setmealMapper.deleteById(id);
+            setmealDishMapper.deleteBySetmealId(id);
+        }
+    }
+
+    /**
+     * 更新售卖状态
+     *
+     * @param status
+     * @param ids
+     */
+    @Override
+    public void updateStatus(Integer status, Long[] ids) {
+        for (Long id : ids) {
+            setmealMapper.updateStatus(status, id);
+        }
+    }
+
+    @Override
+    public boolean selectStatus(Long[] ids) {
+        for (Long id : ids) {
+            if (setmealMapper.selectStatus(id)==1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 添加菜品
+     * @param setmealDto
+     */
     public void addSetmealDish(SetmealDto setmealDto) {
         List<SetmealDish> list = setmealDto.getSetmealDishes();
         Employee emp = (Employee) ThreadLocalUtil.get();
