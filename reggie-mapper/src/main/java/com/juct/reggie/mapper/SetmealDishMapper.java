@@ -21,6 +21,12 @@ public interface SetmealDishMapper {
     @Delete("delete from setmeal_dish where setmeal_id = #{id}")
     void deleteBySetmealId(Long id);
 
-    @Select("select count(*) from setmeal_dish where dish_id = #{id}")
-    int selectByDishIdCount(Long id);
+/*    @Select("select count(*) from setmeal_dish where dish_id = #{id}")
+    int selectByDishIdCount(Long id);*/
+
+    @Select("select dish_id from setmeal_dish where setmeal_id = #{id} ")
+    List<Long> selectDishIdBySetmealId(Long id);
+
+    @Select("select setmeal_id from setmeal_dish where dish_id = #{id}")
+    List<Long> selectSetmealIdByDishId(Long id);
 }

@@ -56,5 +56,17 @@ public interface SetmealService {
      */
     void updateStatus(Integer status, Long[] ids);
 
+    /**
+     * 查询套餐起售状态
+     * @param ids
+     * @return
+     */
     boolean selectStatus(Long[] ids);
+
+    /**
+     * 查询套餐下菜品起售状态
+     *
+     * @return
+     */
+    boolean selectDishStatus(Long[] ids);
 }

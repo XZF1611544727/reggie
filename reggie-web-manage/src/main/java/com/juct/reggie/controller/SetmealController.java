@@ -109,6 +109,12 @@ public class SetmealController {
             @PathVariable Integer status,
             Long[] ids
     ) {
+        //套餐下菜品必须是起售状态，否则不能起售套餐
+        if (status == 1) {
+            if (setmealService.selectDishStatus(ids)) {
+                return R.error("套餐下有菜品未起售");
+            }
+        }
         setmealService.updateStatus(status, ids);
         return R.success(null);
     }

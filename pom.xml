@@ -10,6 +10,7 @@
         <module>reggie-mapper</module>
         <module>reggie-service</module>
         <module>reggie-web-manage</module>
+        <module>reggie-web-app</module>
     </modules>
 
     <groupId>com.juct</groupId>

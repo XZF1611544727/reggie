@@ -12,10 +12,7 @@ import com.juct.reggie.domain.Dish;
 import com.juct.reggie.domain.DishFlavor;
 import com.juct.reggie.domain.Employee;
 import com.juct.reggie.dto.DishDto;
-import com.juct.reggie.mapper.CategoryMapper;
-import com.juct.reggie.mapper.DishFlavorMapper;
-import com.juct.reggie.mapper.DishMapper;
-import com.juct.reggie.mapper.SetmealDishMapper;
+import com.juct.reggie.mapper.*;
 import com.juct.reggie.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Select;
@@ -48,6 +45,9 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+
+    @Autowired
+    private SetmealMapper setmealMapper;
 
     @Override
     public List<Dish> selectByCategoryId(String categoryId) {
@@ -164,19 +164,31 @@ public class DishServiceImpl implements DishService {
      */
     @Override
     public void updateStatus(Integer status, Long[] ids) {
+        //停售菜品得时候同时停售关联套餐
         for (Long id : ids) {
-            dishMapper.updateStatus(status,id);
+            dishMapper.updateStatus(status, id);
+            if (status == 0) {
+                List<Long> setmealIds = setmealDishMapper.selectSetmealIdByDishId(id);
+                for (Long setmealId : setmealIds) {
+                    setmealMapper.updateStatus(status, setmealId);
+                }
+            }
         }
     }
 
+    /**
+     *
+     * @param ids
+     * @return
+     */
     @Override
     public boolean selectBySetmealCount(Long[] ids) {
         for (Long id : ids) {
-            if (setmealDishMapper.selectByDishIdCount(id) >= 0) {
-                return true;
+            if (setmealDishMapper.selectSetmealIdByDishId(id).isEmpty()) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**

@@ -12,9 +12,11 @@ import com.juct.reggie.domain.Setmeal;
 import com.juct.reggie.domain.SetmealDish;
 import com.juct.reggie.dto.SetmealDto;
 import com.juct.reggie.mapper.CategoryMapper;
+import com.juct.reggie.mapper.DishMapper;
 import com.juct.reggie.mapper.SetmealDishMapper;
 import com.juct.reggie.mapper.SetmealMapper;
 import com.juct.reggie.service.SetmealService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,7 @@ import java.util.List;
  * @create 2022-11-15 20:38
  */
 @Service
+@Slf4j
 public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
@@ -38,12 +41,16 @@ public class SetmealServiceImpl implements SetmealService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private DishMapper dishMapper;
+
     /**
      * 新增数据
      * @param setmealDto
      */
     @Transactional
     @Override
+
     public void addSetmeal(SetmealDto setmealDto) {
         //生成ID
         long setmealId = IdUtil.getSnowflakeNextId();
@@ -63,6 +70,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 条件分页查询
+     *
      * @param page
      * @param pageSize
      * @param name
@@ -70,10 +78,10 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public PageInfo<SetmealDto> selectByPage(Integer page, Integer pageSize, String name) {
         //开启分页查询
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         //查询数据
-        if(StrUtil.isNotBlank(name)){
-            name = "%"+name+"%";
+        if (StrUtil.isNotBlank(name)) {
+            name = "%" + name + "%";
         }
         List<Setmeal> list = setmealMapper.selectByName(name);
         //封装数据
@@ -94,6 +102,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 根据姓名查询
+     *
      * @param name
      * @return
      */
@@ -104,6 +113,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 根据ID 查询
+     *
      * @param id
      * @return
      */
@@ -133,6 +143,11 @@ public class SetmealServiceImpl implements SetmealService {
         addSetmealDish(setmealDto);
     }
 
+    /**
+     * 删除套餐
+     *
+     * @param ids
+     */
     @Override
     public void deleteSetmeals(Long[] ids) {
         for (Long id : ids) {
@@ -154,10 +169,16 @@ public class SetmealServiceImpl implements SetmealService {
         }
     }
 
+    /**
+     * 查询套餐状态status
+     *
+     * @param ids
+     * @return
+     */
     @Override
     public boolean selectStatus(Long[] ids) {
         for (Long id : ids) {
-            if (setmealMapper.selectStatus(id)==1) {
+            if (setmealMapper.selectStatus(id) == 1) {
                 return false;
             }
         }
@@ -165,13 +186,36 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     /**
+     * 查询套餐下菜品起售状态
+     *
+     * @return 有未起售则返回ture
+     */
+    @Override
+    public boolean selectDishStatus(Long[] ids) {
+        for (Long id : ids) {
+            List<Long> dishIds = setmealDishMapper.selectDishIdBySetmealId(id);
+            for (Long dishID : dishIds) {
+                if (!dishMapper.selectStatusById(dishID)) {
+                    return true;
+                }
+            }
+            log.info("id = {} ", id);
+        }
+        return false;
+    }
+
+    /**
      * 添加菜品
+     *
      * @param setmealDto
      */
     public void addSetmealDish(SetmealDto setmealDto) {
         List<SetmealDish> list = setmealDto.getSetmealDishes();
+        //获取当前用户对象
         Employee emp = (Employee) ThreadLocalUtil.get();
+        //遍历保存
         for (SetmealDish setmealDish : list) {
+            //补全数据
             setmealDish.setId(IdUtil.getSnowflakeNextId());
             setmealDish.setSetmealId(setmealDto.getId());
             setmealDish.setCreateUser(emp.getId());

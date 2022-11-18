@@ -61,9 +61,9 @@ public interface DishService {
     void updateStatus(Integer status, Long[] ids);
 
     /**
-     * 查询关联套餐
+     * 查询是否有关联套餐
      * @param ids
-     * @return
+     * @return 有则为true
      */
     boolean selectBySetmealCount(Long[] ids);
 }

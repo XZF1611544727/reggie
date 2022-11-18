@@ -34,4 +34,7 @@ public interface DishMapper {
 
     @Update("update dish set status = #{status} where id = #{id}")
     void updateStatus(Integer status, Long id);
+
+    @Select("select status from dish where id = #{dishId}")
+    boolean selectStatusById(Long dishID);
 }
