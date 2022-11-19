@@ -3,6 +3,7 @@ package com.juct.reggie.mapper;
 import com.juct.reggie.domain.Dish;
 import com.juct.reggie.domain.DishFlavor;
 import com.juct.reggie.dto.DishDto;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -37,4 +38,8 @@ public interface DishMapper {
 
     @Select("select status from dish where id = #{dishId}")
     boolean selectStatusById(Long dishID);
+
+    @Select("select * from dish where category_id = #{categoryId} and status = #{status}")
+    List<Dish> listByCidAndStatus(Long categoryId, Integer status);
+
 }

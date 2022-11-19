@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.juct.reggie.domain.Setmeal;
 import com.juct.reggie.dto.SetmealDto;
 
+import java.util.List;
+
 /**
  * @author 谢智峰
  * @create 2022-11-15 20:38
@@ -69,4 +71,13 @@ public interface SetmealService {
      * @return
      */
     boolean selectDishStatus(Long[] ids);
+
+
+    /**
+     * 查询指定分类下的指定状态的套餐列表
+     * @param categoryId
+     * @param status
+     * @return
+     */
+    List<SetmealDto> selectByCategoryId(Long categoryId, Integer status);
 }

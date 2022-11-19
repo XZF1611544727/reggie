@@ -66,4 +66,12 @@ public interface DishService {
      * @return 有则为true
      */
     boolean selectBySetmealCount(Long[] ids);
+
+    /**
+     * 查询指定分类下的指定状态的菜品列表
+     * @param categoryId
+     * @param status
+     * @return
+     */
+    List<DishDto> listDishWithFlavors(Long categoryId, Integer status);
 }

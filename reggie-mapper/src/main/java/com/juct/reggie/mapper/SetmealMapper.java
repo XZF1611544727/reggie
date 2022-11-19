@@ -35,4 +35,7 @@ public interface SetmealMapper {
 
     @Select("select status from setmeal where id = #{id}")
     int selectStatus(Long id);
+
+    @Select("select * from setmeal where category_id = #{categoryId} and status = #{status}")
+    List<Setmeal> selectByCategoryId(Long categoryId, Integer status);
 }

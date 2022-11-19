@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.juct.reggie.common.util.ThreadLocalUtil;
 import com.juct.reggie.constant.EmployeeConstant;
+import com.juct.reggie.converter.DishConvertor;
 import com.juct.reggie.domain.Category;
 import com.juct.reggie.domain.Dish;
 import com.juct.reggie.domain.DishFlavor;
@@ -189,6 +190,21 @@ public class DishServiceImpl implements DishService {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<DishDto> listDishWithFlavors(Long categoryId, Integer status) {
+        List<Dish> dishList = dishMapper.listByCidAndStatus(categoryId, status);
+        //2. 转成前端需要的数据
+        List<DishDto> dishDtos = DishConvertor.INSTANCE.toDtoList(dishList);
+        for (DishDto dishDto : dishDtos) {
+            //3. 查询菜品关联的口味
+            List<DishFlavor> flavors = dishFlavorMapper.selectByDishId(dishDto.getId());
+            //4. 设置关联的口味列表
+            dishDto.setFlavors(flavors);
+        }
+        //5. 返回结果
+        return dishDtos;
     }
 
     /**

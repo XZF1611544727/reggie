@@ -204,6 +204,17 @@ public class SetmealServiceImpl implements SetmealService {
         return false;
     }
 
+    @Override
+    public List<SetmealDto> selectByCategoryId(Long categoryId, Integer status) {
+        List<Setmeal> setmealList = setmealMapper.selectByCategoryId(categoryId,status);
+        List<SetmealDto> setmealDtos = SetmealConverter.INSTANCE.toDtoList(setmealList);
+        for (SetmealDto setmealDto : setmealDtos) {
+            List<SetmealDish> dishlist = setmealDishMapper.selectBySetmealId(setmealDto.getId());
+            setmealDto.setSetmealDishes(dishlist);
+        }
+        return setmealDtos;
+    }
+
     /**
      * 添加菜品
      *
