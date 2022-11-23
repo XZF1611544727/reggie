@@ -20,24 +20,22 @@ public class AddressBookController {
 
     /**
      * 查询所有
-     *
      * @return
      */
     @GetMapping("/list")
     public R<List<AddressBook>> selectBooks() {
-        return R.success(addressBookService.selectBooks());
+        return R.success(addressBookService.list());
     }
 
     /**
      * 添加地址
-     *
      * @param addressBook
      * @return
      */
     @PostMapping
     public R addBook(@RequestBody AddressBook addressBook) {
         addressBookService.addBook(addressBook);
-        return R.success(null);
+        return R.success("地址添加成功");
     }
 
     /**
@@ -62,12 +60,28 @@ public class AddressBookController {
             @RequestBody AddressBook addressBook
     ) {
         addressBookService.updateBook(addressBook);
-        return R.success(null);
+        return R.success("地址更改成功");
     }
 
+    /**
+     * 更改默认地址
+     */
     @PutMapping("/default")
     public R updateDefaultBook(@RequestBody AddressBook addressBook) {
         addressBookService.updateDefaultBook(addressBook);
         return R.success(null);
+    }
+
+    /**
+     * 获取默认收货地址
+     * @return
+     */
+    @GetMapping("/default")
+    public R getDefaultAddress(){
+        AddressBook defaultAddress = addressBookService.getDefaultAddress();
+        if(defaultAddress != null){
+            return R.success(defaultAddress);
+        }
+        return R.error("当前没有默认收货地址，请添加");
     }
 }

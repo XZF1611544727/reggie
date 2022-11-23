@@ -15,8 +15,8 @@ import java.util.List;
 public interface AddressBookMapper {
 
     //查询所有
-    @Select("select * from address_book")
-    List<AddressBook> selectBooks();
+//    @Select("select * from address_book order by is_default desc")
+//    List<AddressBook> selectBooks();
 
     //新增
     void addBook(AddressBook addressBook);
@@ -34,6 +34,9 @@ public interface AddressBookMapper {
     @Update("update address_book set is_default = 0 where user_id = #{userId}")
     void allNotDefault(Long aLong);
 
-    @Select("select * from address_book where user_id = #{uid} and is_default = 1 and is_deleted = 0")
+    @Select("select * from address_book where user_id = #{uid} and is_default = 1 and is_deleted = 0 order by is_default asc")
     AddressBook getDefaultAddress(Long uid);
+
+    @Select("select * from address_book where user_id = #{uid} order by is_default desc")
+    List<AddressBook> list(Long uid);
 }

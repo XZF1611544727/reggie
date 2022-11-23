@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,12 +23,15 @@ public class AddressBookServiceImpl implements AddressBookService {
     AddressBookMapper addressBookMapper;
 
     /**
-     * 查询所有
+     * 查询当前用户的收获地址
      * @return
      */
     @Override
-    public List<AddressBook> selectBooks() {
-        return addressBookMapper.selectBooks();
+    public List<AddressBook> list() {
+        //1. 获取当前用户id
+        Long uid = (Long) ThreadLocalUtil.get();
+        //2. 根据id查询收货地址
+        return addressBookMapper.list(uid);
     }
 
     /**
@@ -59,6 +63,8 @@ public class AddressBookServiceImpl implements AddressBookService {
      */
     @Override
     public void updateBook(AddressBook addressBook) {
+        addressBook.setUpdateUser((Long) ThreadLocalUtil.get());
+        addressBook.setUpdateTime(LocalDateTime.now());
         addressBookMapper.updateBookById(addressBook);
     }
 

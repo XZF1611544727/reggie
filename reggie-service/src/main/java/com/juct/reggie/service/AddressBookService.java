@@ -9,8 +9,6 @@ import java.util.List;
  * @create 2022-11-19 22:55
  */
 public interface AddressBookService {
-    //查询所有
-    List<AddressBook> selectBooks();
 
     //新增
     void addBook(AddressBook addressBook);
@@ -26,4 +24,7 @@ public interface AddressBookService {
 
     //查询默认收货地址
     AddressBook getDefaultAddress();
+
+    //查询当前用户的收获地址
+    public List<AddressBook> list();
 }
